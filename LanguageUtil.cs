@@ -16,7 +16,7 @@ public static class LanguageUtil
 
     static LanguageUtil()
     {
-        Logger.LogFine("[Core][LanguageUtil] - Hooking Modding.ModHooks.LanguageGetHook!");
+        InternalLogger.LogFine("[Core][LanguageUtil] - Hooking Modding.ModHooks.LanguageGetHook!");
         Modding.ModHooks.LanguageGetHook += ModHooksOnLanguageGetHook;
     }
 
@@ -32,7 +32,7 @@ public static class LanguageUtil
     {
         if (!LanguageStringDictionary.ContainsKey(language)) LanguageStringDictionary[language] = new Dictionary<string, Dictionary<string, string>>();
         if (!LanguageStringDictionary[language].ContainsKey(sheet)) LanguageStringDictionary[language][sheet] = new Dictionary<string, string>();
-        Logger.LogDebug($"[Core][LanguageUtil] - Adding string '{language}'/'{sheet}'/'{key}'!");
+        InternalLogger.LogDebug($"[Core][LanguageUtil] - Adding string '{language}'/'{sheet}'/'{key}'!");
         LanguageStringDictionary[language][sheet][key] = message;
     }
 
@@ -44,7 +44,7 @@ public static class LanguageUtil
     [PublicAPI]
     public static void AddFallbackLanguageForSheet(string sheet, Language.LanguageCode fallbackLanguage)
     {
-        Logger.LogDebug($"[Core][LanguageUtil] - Adding fallback language '{fallbackLanguage}' to '{sheet}'!");
+        InternalLogger.LogDebug($"[Core][LanguageUtil] - Adding fallback language '{fallbackLanguage}' to '{sheet}'!");
         FallbackLanguagePerSheet[sheet] = fallbackLanguage;
     }
 
@@ -56,7 +56,7 @@ public static class LanguageUtil
     [PublicAPI]
     public static void AddLanguageSourceForSheet(string sheet, Func<Language.LanguageCode> languageSource)
     {
-        Logger.LogDebug($"[Core][LanguageUtil] - Adding language source '{languageSource.Method}' to '{sheet}'!");
+        InternalLogger.LogDebug($"[Core][LanguageUtil] - Adding language source '{languageSource.Method}' to '{sheet}'!");
         LanguageSourcePerSheet[sheet] = languageSource;
     }
 
@@ -67,7 +67,7 @@ public static class LanguageUtil
 
     private static Language.LanguageCode GetLanguage(string sheet)
     {
-        Logger.LogFine($"[Core][LanguageUtil] - Looking up language for sheet '{sheet}'...");
+        InternalLogger.LogFine($"[Core][LanguageUtil] - Looking up language for sheet '{sheet}'...");
         if (!LanguageSourcePerSheet.ContainsKey(sheet)) return Language.Language.CurrentLanguage();
         Language.LanguageCode language = LanguageSourcePerSheet[sheet]();
         if (LanguageStringDictionary.ContainsKey(language) && LanguageStringDictionary[language].ContainsKey(sheet)) return language;
@@ -76,14 +76,14 @@ public static class LanguageUtil
 
     private static string GetString(Language.LanguageCode language, string key, string sheet, string orig)
     {
-        Logger.LogFine($"[Core][LanguageUtil] - Looking up string for '{language}'/'{sheet}'/'{key}' with orig '{orig}'...");
+        InternalLogger.LogFine($"[Core][LanguageUtil] - Looking up string for '{language}'/'{sheet}'/'{key}' with orig '{orig}'...");
         if (!HasSheet(language, sheet)) return orig;
         return LanguageStringDictionary[language][sheet].ContainsKey(key) ? LanguageStringDictionary[language][sheet][key] : orig;
     }
 
     private static bool HasSheet(Language.LanguageCode language, string sheet)
     {
-        Logger.LogFine($"[Core][LanguageUtil] - Checking if '{language}'/'{sheet}' exists...");
+        InternalLogger.LogFine($"[Core][LanguageUtil] - Checking if '{language}'/'{sheet}' exists...");
         return LanguageStringDictionary.ContainsKey(language) && LanguageStringDictionary[language].ContainsKey(sheet);
     }
 }

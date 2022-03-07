@@ -1,6 +1,6 @@
 ﻿namespace Core.LanguageUtil;
 
-internal static class Logger
+internal static class InternalLogger
 {
     internal static void LogFine(string message)
     {

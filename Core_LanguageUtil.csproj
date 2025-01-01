@@ -6,7 +6,7 @@
         <AssemblyName>Core_LanguageUtil</AssemblyName>
         <AssemblyTitle>Core_LanguageUtil</AssemblyTitle>
         <Description>A Hollow Knight Mod</Description>
-        <Copyright>Copyright © HK Modding 2021-2022</Copyright>
+        <Copyright>Copyright © HK Modding 2025</Copyright>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>$(AssemblyVersion)</FileVersion>
         <ImplicitUsings>false</ImplicitUsings>
